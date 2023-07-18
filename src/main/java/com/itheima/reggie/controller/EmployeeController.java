@@ -145,4 +145,20 @@ public class EmployeeController {
         //其内部会把数据塞进pageInfo
         return R.success(pageInfo);
     }
+
+    /**
+     * 根据id修改员工信息
+     * E:\project_file1\Java\reggie_take_out\src\main\resources\backend\page\member 130
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Employee employee){
+        //传进来的employee只有id status两个字段，其他的没传
+        log.info(employee.toString());
+        Long empID = (Long)request.getSession().getAttribute("employee");
+        employee.setUpdateUser(empID);
+        employee.setUpdateTime(LocalDateTime.now());
+        employeeService.updateById(employee);
+
+        return R.success("J员工信息修改成功。");
+    }
 }
